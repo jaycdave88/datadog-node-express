@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Home / Search Page</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/form-elements.css">
+        <link rel="stylesheet" href="/css/style.css">
+
+    </head>
+
+    <body class="bg">
+
+        <!-- Top content -->
+        <div class="top-content">
+
+            <div class="inner-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 form-box">
+                        	<div class="form-top">
+                        		<div class="form-top-left">
+                        			<h3>Reserve Michelin Star and Bib Gourmand Restaurants Quickly</h3>
+                            		<p>Enter your zip code:</p>
+                        		</div>
+                        		<div class="form-top-right">
+                        			<i class="fa fa-cutlery"></i>
+                        		</div>
+                            </div>
+                            <div class="form-bottom">
+
+
+                                                <% if (error.length > 0) { %>
+                          <div class="alert alert-danger"><%- error %></div>
+                          <% } %>
+
+                           <% if (success.length > 0) { %>
+                          <div class="alert alert-success"><%- success %></div>
+                          <% } %>
+
+
+
+
+			                    <form role="form" action="/search" role="form" method="post" class="login-form">
+			                    	<div class="form-group">
+			                    		<label class="sr-only" for="form-zip">Zip code</label>
+			                        	<input type="text" name="zip" required  placeholder="Zip code" class="form-zip form-control" id="zip">
+			                        </div>
+
+			                        <button type="submit" class="btn btn-success">Let's Eat!</button>
+			                    </form>
+		                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- Javascript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="/js/scripts.js"></script>
+
+    </body>
+
+</html>
