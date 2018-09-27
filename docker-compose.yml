@@ -18,6 +18,8 @@ services:
       - SD_BACKEND=docker
       - NON_LOCAL_TRAFFIC=false
       - MAX_TRACES_PER_SECOND=1
+    links:
+        - mongo
 
   mongo:
     image: mongo:latest
@@ -25,8 +27,8 @@ services:
       - "27017:27017"
     hostname: mongo
     container_name: demo-mongo
-    depends_on:
-      - agent
+    volumes:
+      - ./data:/data/db
 
   redis:
     image: redis:4.0.10
@@ -34,14 +36,15 @@ services:
       - "6379:6379"
     hostname: redis
     container_name: demo-redis
-    depends_on:
-      - mongo
+    links:
+        - agent
 
   demo:
     build:
         context: .
+    restart: always
     ports:
       - "3000:3000"
     container_name: demo-app
-    depends_on:
+    links:
       - redis
