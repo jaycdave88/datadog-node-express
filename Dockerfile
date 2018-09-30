@@ -14,5 +14,10 @@ COPY node_app/ /usr/src/app/
 EXPOSE 3000
 USER node
 
+ENV MONGO_HOST=mongo
+ENV MONGO_PORT=27017
+ENV REDIS_HOST=redis
+ENV REDIS_PORT=6379
+
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD [ "node", "." ]
