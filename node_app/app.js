@@ -5,14 +5,17 @@ const app = express();
 const tracer = require('dd-trace').init({ service: 'node-express', // shows up as Service in Datadog UI
                                         hostname: 'agent', // references the `agent` service in docker-compose.yml
                                         env: 'staging',
-                                        sampleRate: 1,
-                                        debug: true}) // useful for seeing request/response and any logs
+                                        plugins: true,
+                                        sampleRate: 1});
+                                        // debug: true}) // useful for seeing request/response and any logs
 const bodyParser = require('body-parser');
 
 
 const session = require('express-session');
-//const restful = require('node-restful');
 const mongoose = require('mongoose');
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
+
 const responseTime = require('response-time');
 const axios = require('axios');
 const redis = require('redis');
@@ -22,9 +25,23 @@ const redis = require('redis');
 
 const port = process.env.PORT || 3000;
 
-tracer.use('express');
-
 // Mongodb
+
+// Connection URL
+const url = 'mongodb://demo-mongo:27017';
+
+// Database Name
+const dbName = 'Users';
+
+// Use connect method to connect to the server
+MongoClient.connect(url, { useNewUrlParser: true }, function(err, client) {
+  assert.equal(null, err);
+  console.log("Connected successfully to MongoDB");
+  const db = client.db(dbName);
+  client.close();
+});
+
+
 //mongoose.Promise = global.Promise;
 
 // Connecting to the database
@@ -47,24 +64,6 @@ const client = redis.createClient('redis://demo-redis:6379');
 client.on('error', (err) => {
   console.log("Error " + err);
 });
-// RedisStore
-/***************Redis configuratrion********************/
-// Caching something using Redis
-/*var RedisStore = require('connect-redis')(session);
-var confRedis = require('./config/redis.js');
-
-// Redis session
-app.use(session({
-  store: new RedisStore(confRedis.session),
-  secret: confRedis.secret,
-  resave: true,
-  saveUninitialized: true,
-  name: 'demo',
-  cookie: {
-    secure: confRedis.secure_cookie,
-    maxAge: 3600000 //1 Hour
-  }
-}));*/
 
 // simple route
 app.get('/', (req, res) => {
