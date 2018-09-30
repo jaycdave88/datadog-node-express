@@ -6,7 +6,11 @@ const tracer = require('dd-trace').init({ service: 'node-express', // shows up a
                                         //debug: true}) // useful for seeing request/response and any logs
 const axios = require('axios');
 const redis = require('redis');
-const client = redis.createClient('redis://demo-redis:6379');
+
+const redis_host = process.env.REDIS_HOST || 'demo-redis';
+const redis_port = process.env.REDIS_PORT || '6379';
+
+const client = redis.createClient('redis://'+redis_host+':'redis_port);
 // create an api/search route
 exports.search = (req, res) => {
   // Extract the query from url and trim trailing spaces
