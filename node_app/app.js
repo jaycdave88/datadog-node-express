@@ -25,10 +25,16 @@ const redis = require('redis');
 
 const port = process.env.PORT || 3000;
 
+const mongo_host = process.env.MONGO_HOST || 'demo-mongo';
+const mongo_port = process.env.MONGO_PORT || '27017';
+
+const redis_host = process.env.REDIS_HOST || 'demo-redis';
+const redis_port = process.env.REDIS_PORT || '6379';
+
 // Mongodb
 
 // Connection URL
-const url = 'mongodb://demo-mongo:27017';
+const url = 'mongodb://'+mongo_host+':'+mongo_port;
 
 // Database Name
 const dbName = 'Users';
@@ -58,7 +64,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.json({type:'application/vnd.api+json'}));
 
 // create and connect redis client to local instance.
-const client = redis.createClient('redis://demo-redis:6379');
+const client = redis.createClient('redis://'+redis_host+':'+redis_port);
 
 // Print redis errors to the console
 client.on('error', (err) => {

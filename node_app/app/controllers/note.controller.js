@@ -4,12 +4,16 @@ const tracer = require('dd-trace').init({ service: 'node-express', // shows up a
                                         env: 'staging',
                                         plugins: true,
                                         sampleRate: 1});
+
+const mongo_host = process.env.MONGO_HOST || 'demo-mongo';
+const mongo_port = process.env.MONGO_PORT || '27017';
+
 // Create and Save a new Note
 var  MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 
 // Connection URL
-const url = 'mongodb://demo-mongo:27017';
+const url = 'mongodb://'+mongo_host+':'+mongo_port;
 
 // Database Name
 const dbName = 'Users';
